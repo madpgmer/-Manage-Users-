@@ -51,7 +51,7 @@ public class UserDB {
         Connection con = cp.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "SELECT * FROM user INNER JOIN role ON role.role_id = user.role WHERE email =?";
+        String sql = "SELECT * FROM user INNER JOIN role ON role.role_id = user.role WHERE email =? LIMIT 1";
         
         try {
             ps = con.prepareStatement(sql);
@@ -81,14 +81,14 @@ public class UserDB {
         ConnectionPool cp = ConnectionPool.getInstance();
         Connection con = cp.getConnection();
         PreparedStatement ps = null;
-        String sql = "INSERT INTO user (`email`, `first_name`, `last_name`, `password`, `role`) VALUES (?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO `userdb`.`user` (`email`, `first_name`, `last_name`, `password`, `role`) VALUES (?, ?, ?, ?, ?)";
         
         boolean inserted = false;
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, user.getEmail());
-            ps.setString(2, user.getFirstname());
-            ps.setString(3, user.getLastname());
+            ps.setString(2, user.getFirstName());
+            ps.setString(3, user.getLastName());
             ps.setString(4, user.getPassword());
             ps.setInt(5, user.getRole().getId());
             inserted = ps.executeUpdate() != 0 ? true : false;
@@ -107,8 +107,8 @@ public class UserDB {
         boolean updated = false;
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, user.getFirstname());
-            ps.setString(2, user.getLastname());
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
             ps.setString(3, user.getPassword());
             ps.setInt(4, user.getRole().getId());
             ps.setString(5, user.getEmail());
@@ -125,7 +125,8 @@ public class UserDB {
         ConnectionPool cp = ConnectionPool.getInstance();
         Connection con = cp.getConnection();
         PreparedStatement ps = null;
-        String sql = "DELETE FROM user WHERE email =?";
+        //String sql = "DELETE FROM user WHERE email =?";
+        String sql = "UPDATE user SET active = 0 WHERE email =?";
         boolean deleted = false;
         try {
             ps = con.prepareStatement(sql);

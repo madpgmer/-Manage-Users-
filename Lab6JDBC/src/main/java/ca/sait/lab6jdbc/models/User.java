@@ -37,11 +37,11 @@ public class User implements Serializable {
         return active;
     }
 
-    public String getFirstname() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public String getLastname() {
+    public String getLastName() {
         return lastName;
     }
 
@@ -61,11 +61,11 @@ public class User implements Serializable {
         this.active = active;
     }
 
-    public void setFirstname(String firstname) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public void setLastname(String lastname) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
@@ -78,7 +78,5 @@ public class User implements Serializable {
     }
 
     
-    
-    
-    
+   
 }

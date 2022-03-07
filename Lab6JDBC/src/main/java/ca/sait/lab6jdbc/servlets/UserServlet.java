@@ -1,7 +1,11 @@
-
 package ca.sait.lab6jdbc.servlets;
 
+import ca.sait.lab6jdbc.models.User;
+import ca.sait.lab6jdbc.services.UserService;
 import java.io.IOException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Madhu
  */
-@WebServlet(name = "UserServlet", urlPatterns = {"/user"})
 public class UserServlet extends HttpServlet {
   
     /**
@@ -27,9 +30,20 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        UserService service =  new UserService();
+        
+        try {
+            List<User> users = service.getAll();
+            
+            request.setAttribute("users", users);
+                    
+        this.getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);    
+        } catch (Exception ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
-        this.getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
+        
     }
 
     /**
@@ -44,8 +58,9 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
         
-        getServletContext().getRequestDispatcher("/WEB-INF/notes.jsp").forward(request, response);
+        
     }
 
   
