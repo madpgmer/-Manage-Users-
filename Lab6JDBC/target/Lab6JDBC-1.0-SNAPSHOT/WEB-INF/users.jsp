@@ -17,15 +17,49 @@
     </head>
     <body>
         <h1>User Management System</h1>
-        
-        <table class = "table">
+        <div class="container">
+  <div class="row">
+    <div class="col">
+      
+      <div class="container">
+            <div class="column">
+                <form class="forms" method="post" action="user">
+                    <h2>Add User</h2>
+                    <input id="add_email" class="box" type="email" name="add_email" placeholder="Email" value="${add_email}" required><br><br>
+                    Active: 
+                        <input id="add_active_yes" type="radio" name="add_active" value="true"><label for="add_active_yes" required>Yes</label>
+                        <input id="add_active_no" type="radio" name="add_active" value="false"><label for="add_active_no" required>No</label><br><br>
+                    <input id="add_first_name" class="box" type="text" name="add_first_name" placeholder="First Name" value="${add_first_name}" required><br><br>
+                    <input id="add_last_name" class="box" type="text" name="add_last_name" placeholder="Last Name" value="${add_last_name}" required><br><br>
+                    <input id="add_password" class="box" type="password" name="add_password" placeholder="Password" value="${add_password}" required><br><br>
+                
+                    <select class="select" name"addrole">
+                    <option value="">Pick a Role</option>
+                    <c:forEach var="role" items="${roles}">
+                        <option value="${role.role_name}" ${role.role_name == roles ? 'selected="selected"' : ''} >${role.role_name}</option>
+                        <%-- <option ${add_role == "${role_name}"?"selected":""} value="${role_name}">${role_name}</option> --%>
+                        
+                        
+                    </c:forEach>
+                    </select><br>
+                    <input class="button" type="submit" value="Save">
+                    <input type="hidden" name="action" value="add">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col order-1">
+      <div class="container">
+            <div class="column">
+               <table class = "table">
             <thead>
                 <tr>
                     <th> Email </th>
                     <th> First Name </th>
                     <th> Last Name </th>
                     <th> Active </th>
-                    <th> Actions </th>
+                    <th> Role </th>
+                    <th> Delete </th>
                 </tr>
             
             </thead>
@@ -36,15 +70,50 @@
                         <td>${user.firstName}</td>
                         <td>${user.lastName}</td>
                         <td>${user.active ? "YES": "NO"}</td>
+                        <td>${user.getRole().getRole_name()}</td>
                         <td>
-                            <a href="">Edit</a>
                             <a href="">Delete</a>
                         </td>
                         
                     </tr>
                 </c:forEach>
             </tbody>
-        </table>
+        </table> 
+            </div>
+        </div>
+    </div>
+      
+      
+      
+      
+    <div class="col order-5">      
+       <form class="forms" method="post" action="user">
+                <h2>Edit User</h2>
+                <input id="edit_email" class="box" type="email" name="edit_email" placeholder="Email" value="${edit_email}" required><br><br>
+                Active: 
+                    <input id="edit_active_yes" type="radio" name="edit_active[]" value="true"><label for="edit_active_yes" required>Yes</label>
+                    <input id="edit_active_no" type="radio" name="edit_active[]" value="false"><label for="edit_active_no" required>No</label><br><br>
+                <input id="edit_first_name" class="box" type="text" name="edit_first_name" placeholder="First Name" value="${edit_first_name}" required><br><br>
+                <input id="edit_last_name" class="box" type="text" name="edit_last_name" placeholder="Last Name" value="${edit_last_name}" required><br><br>
+                <input id="edit_password" class="box" type="password" name="edit_password" placeholder="Password" value="${edit_password}" required><br><br>
+                <select class="select" name="edit_role" required>
+                    <option value="">Pick a Role</option>
+                    <c:forEach var="role" items="${roles}">
+                        <option value="${role.role_name}" ${role.role_name == roles ? 'selected="selected"' : ''} >${role.role_name}</option>
+                    </c:forEach>
+                </select><br>
+                <input class="button" type="submit" value="Update">
+                <input type="hidden" name="action" value="edit">
+            </form>
+    </div>
+  </div>
+</div>
+</div>
+        
+            
+        
+        
+        
     </body>
 </html>
 

@@ -22,13 +22,13 @@ public class UserService {
     
     public boolean insert(String email, boolean active, String firstName, String lastName, String password, Role role) throws Exception {
         User user = new User(email, active, firstName, lastName, password, role);
-        return this.userDB.insert(user);
+       return this.userDB.insert(user);
         
     }
     
     public boolean update(String email, boolean active, String firstName, String lastName, String password, Role role) throws Exception {
        User user = new User(email, active, firstName, lastName, password, role);
-        return this.userDB.update(user);
+      return this.userDB.update(user);
        
     }
     

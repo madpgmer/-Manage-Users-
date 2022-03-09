@@ -7,32 +7,33 @@ import java.io.Serializable;
  * @author Madhu
  */
 public class Role implements Serializable{ 
-    private int id;
-    private String name;
+    private int role_id;
+    private String role_name;
 
     public Role(){
     
     }
 
-    public Role(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public Role(int role_id, String role_name) {
+        this.role_id = role_id;
+        this.role_name = role_name;
     }
 
-    public int getId() {
-        return id;
+    public int getRole_id() {
+        return role_id;
     }
 
-    public String getName() {
-        return name;
+    public String getRole_name() {
+        return role_name;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setRole_id(int role_id) {
+        this.role_id = role_id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRole_name(String role_name) {
+        this.role_name = role_name;
     }
-    
+
+       
 }
