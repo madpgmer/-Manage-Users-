@@ -33,30 +33,10 @@ public class UserServlet extends HttpServlet {
             throws ServletException, IOException {
                 
         UserService uservice = new UserService();
-        RoleService rservice = new RoleService();
-        try {
-            if (request.getParameter("action") != null) {
-                if (request.getParameter("action").equals("edit")) {
-                    String email = request.getParameter("email");
-                    request.setAttribute("edit_email", email);
-                }
-                if (request.getParameter("action").equals("delete")) {
-                    String email = request.getParameter("email");
-                    uservice.delete(email);
-                    request.setAttribute("message", "User " + email + " deleted!");
-                }
-            }
-            List<User> users = uservice.getAll();
-            request.setAttribute("users", users);
-            List<Role> roles = rservice.getAll();
-            request.setAttribute("roles", roles);
-        } catch (Exception ex) {
-            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        request.setAttribute("action", null);
-        getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
         
-    }
+        
+        getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
+   }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -70,7 +50,7 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        HttpSession session = request.getSession();
+       
         UserService uservice = new UserService();
         RoleService rservice = new RoleService();
         
@@ -82,40 +62,39 @@ public class UserServlet extends HttpServlet {
         try {
             switch(action) {
                 case "add":
-                    stringRole = request.getParameter("roll_name");
+                    stringRole = request.getParameter("addrole");
                     switch(stringRole) {
                         case "system admin": intRole = 1; break;
                         case "regular user": intRole = 2; break;
                         case "company admin": intRole = 3; break;
                         default: break;
                     }
+                    role.setRole_id(intRole);
                     email = request.getParameter("add_email");
                     uservice.insert( email, 
-                            Boolean.parseBoolean(request.getParameter("add_active[]")), 
+                            Boolean.parseBoolean(request.getParameter("add_active")), 
                             request.getParameter("add_first_name"), 
                             request.getParameter("add_last_name"), 
-                            request.getParameter("add_password"),
-                            role );
-                    request.setAttribute("message", "User " + email + " added!");
+                            request.getParameter("add_password"),role );
+                    request.setAttribute("message", "New user " + email + " has been added!");
                     break;
 
                 case "edit":
-                    stringRole = request.getParameter("edit_role");
+                    stringRole = request.getParameter("editrole");
                     switch(stringRole) {
                         case "system admin": intRole = 1; break;
                         case "regular user": intRole = 2; break;
                         case "company admin": intRole = 3; break;
                         default: break;
                     }
+                    role.setRole_id(intRole);
                     email = request.getParameter("edit_email");
                     uservice.update(email, 
-                            Boolean.parseBoolean(request.getParameter("edit_active[]")), 
+                            Boolean.parseBoolean(request.getParameter("edit_active")), 
                             request.getParameter("edit_first_name"), 
                             request.getParameter("edit_last_name"), 
-                            request.getParameter("edit_password"), 
-                        role
-                        );
-                    request.setAttribute("message", "User " + email + " edited!");
+                            request.getParameter("edit_password"),role);
+                    request.setAttribute("message", "User " + email + " has been updated!");
                     break;
                 
                 default:
@@ -130,7 +109,7 @@ public class UserServlet extends HttpServlet {
         } catch (Exception ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        request.setAttribute("action", null);
+        
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
         
     }
