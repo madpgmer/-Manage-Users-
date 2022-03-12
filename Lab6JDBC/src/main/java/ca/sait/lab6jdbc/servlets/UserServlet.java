@@ -33,7 +33,24 @@ public class UserServlet extends HttpServlet {
             throws ServletException, IOException {
                 
         UserService uservice = new UserService();
-        
+        try {
+            if (request.getParameter("action") != null) {
+                if (request.getParameter("action").equals("delete")) {
+                    String email = request.getParameter("email");
+                    uservice.delete(email);
+                    request.setAttribute("message", "User " + email + " has been deleted!");
+                }
+           }
+            List<User> users = uservice.getAll();
+            request.setAttribute("users", users);
+            
+            RoleService rservice = new RoleService();
+            List<Role> roles = rservice.getAll();
+            request.setAttribute("roles", roles);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
    }

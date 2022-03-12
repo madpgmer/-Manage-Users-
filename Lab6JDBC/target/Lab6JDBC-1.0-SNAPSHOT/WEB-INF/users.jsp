@@ -77,7 +77,7 @@
                         <td>${user.active ? "YES": "NO"}</td>
                         <td>${user.getRole().getRole_name()}</td>
                         <td>
-                            <a href="">Delete</a>                            
+                            <a href="user?action=delete&amp;email=${user.email}">Delete</a>                            
                         </td>
                     </tr>
                 </c:forEach>
